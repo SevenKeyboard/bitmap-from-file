@@ -56,7 +56,7 @@ class BitmapFromFile
             map := this._map.clone()
             this._map := object()
             for pBitmap in map
-                dllCall("Gdiplus.dll\GdipDisposeImage", "Ptr",pBitmap, "UInt") ;  Gdip_DisposeImage(pBitmap)
+                dllCall("Gdiplus.dll\GdipDisposeImage", "Ptr",pBitmap, "UInt")
         }
     }
 }
