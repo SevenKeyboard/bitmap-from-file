@@ -13,7 +13,7 @@ class VersionManager_BitmapFromFile
     static _ := VersionManager_BitmapFromFile._init()
     _init()    {
         global
-        BITMAPFROMFILE_VERSION := "1.0.0"
+        BITMAPFROMFILE_VERSION := "1.0.1"
     }
 }
 class BitmapFromFile
@@ -22,11 +22,11 @@ class BitmapFromFile
         this._pBitmap := 0
         this._pBitmap := Gdip_CreateBitmapFromFile(fileName)
         if (this._pBitmap)
-            BitmapFromFile.OnExitDisposer.register(this._pBitmap)
+            this.base.OnExitDisposer.register(this._pBitmap)
     }
     __delete()    {
         if (this._pBitmap)    {
-            BitmapFromFile.OnExitDisposer.unregister(this._pBitmap)
+            this.base.OnExitDisposer.unregister(this._pBitmap)
             dllCall("Gdiplus.dll\GdipDisposeImage", "Ptr",this._pBitmap, "UInt")
             this._pBitmap := 0
         }
