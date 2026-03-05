@@ -13,7 +13,7 @@ class VersionManager_BitmapFromFile
     static _ := VersionManager_BitmapFromFile._init()
     _init()    {
         global
-        BITMAPFROMFILE_VERSION := "1.0.1"
+        BITMAPFROMFILE_VERSION := "1.0.2"
     }
 }
 class BitmapFromFile
@@ -38,7 +38,7 @@ class BitmapFromFile
     }
     class OnExitDisposer
     {
-        static _map := object()
+        static _handles := object()
         register(pBitmap)    { ;  static
             static init := false
             if (!init)    {
@@ -46,16 +46,16 @@ class BitmapFromFile
                 onExit(objBindMethod(this, "_exiting"))
             }
             if (pBitmap := format("{:d}", pBitmap))
-                this._map[pBitmap] := true
+                this._handles[pBitmap] := true
         }
         unregister(pBitmap)    { ;  static
-            if (this._map.hasKey(pBitmap := format("{:d}", pBitmap)))
-                this._map.delete(pBitmap)
+            if (this._handles.hasKey(pBitmap := format("{:d}", pBitmap)))
+                this._handles.delete(pBitmap)
         }
         _exiting(exitReason, exitCode)    { ;  static
-            map := this._map.clone()
-            this._map := object()
-            for pBitmap in map
+            handles := this._handles.clone()
+            this._handles := object()
+            for pBitmap in handles
                 dllCall("Gdiplus.dll\GdipDisposeImage", "Ptr",pBitmap, "UInt")
         }
     }
